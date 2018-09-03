@@ -4,7 +4,7 @@ class Weather {
     this.zip = obj.zip,
     this.app_id = config.app_id,
     this.base_url = 'https://api.openweathermap.org/data/2.5/weather?units=imperial'
-    this.credentials = `&APPID=${this.app_id}`
+    this.credentials = `APPID=${this.app_id}`
     this.icon_base_url = 'http://openweathermap.org/img/w/'
   }
 
@@ -18,7 +18,7 @@ class Weather {
       searchVal = `q=${cityToSearch}`
     }
     console.log('search: ', searchVal)
-    let searchUrl = `${this.base_url}&${searchVal}${this.credentials}`
+    let searchUrl = `${this.base_url}&${searchVal}&${this.credentials}`
     console.log({searchUrl})
     const weatherResponse = await fetch(searchUrl)
     const weatherData = await weatherResponse.json()
