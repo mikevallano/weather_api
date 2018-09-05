@@ -1,24 +1,19 @@
 class Weather {
-  constructor(obj) {
-    this.city = obj.city,
-    this.zip = obj.zip,
-    this.app_id = config.app_id,
+  constructor() {
     this.base_url = 'https://api.openweathermap.org/data/2.5/weather?units=imperial'
-    this.credentials = `APPID=${this.app_id}`
+    this.credentials = `APPID=${config.app_id}`
   }
 
   async getWeatherData(obj) {
-    let cityToSearch = this.city || obj.city
-    let zipToSearch = this.zip || obj.zip
+    let cityToSearch = obj.city
+    let zipToSearch = obj.zip
     let searchVal;
     if (zipToSearch) {
       searchVal = `zip=${zipToSearch}`
     } else {
       searchVal = `q=${cityToSearch}`
     }
-    console.log('search: ', searchVal)
     let searchUrl = `${this.base_url}&${searchVal}&${this.credentials}`
-    console.log({searchUrl})
     const weatherResponse = await fetch(searchUrl)
     const weatherData = await weatherResponse.json()
 

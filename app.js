@@ -1,6 +1,3 @@
-let weather = new Weather({})
-let ui = new Ui
-let storage = new Storage
 const locationForm = document.querySelector('form#location')
 const locationModal = document.getElementById('locationModal')
 const cityInput = document.getElementById('city')
@@ -14,7 +11,7 @@ const descriptionDisplay = document.getElementById('w-desc')
 const temperatureDisplay = document.getElementById('w-temp')
 const iconDisplay = document.getElementById('w-icon')
 
-document.addEventListener('DOMContentLoaded', getWeatherData(storage.getLocation()))
+document.addEventListener('DOMContentLoaded', getWeatherData(new Storage().getLocation()))
 
 locationForm.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -28,8 +25,7 @@ locationForm.addEventListener('submit', (e) => {
 
 
 function getWeatherData(obj) {
-  console.log({obj})
-  weather.getWeatherData(obj)
-    .then(data => ui.paint(data.weatherData))
+  new Weather().getWeatherData(obj)
+    .then(data => new Ui().paint(data.weatherData))
     .catch(err => {console.log(err)})
 };
