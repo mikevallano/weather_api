@@ -1,5 +1,6 @@
 let weather = new Weather({})
 let ui = new Ui
+let storage = new Storage
 const locationForm = document.querySelector('form#location')
 const locationModal = document.getElementById('locationModal')
 const cityInput = document.getElementById('city')
@@ -13,26 +14,22 @@ const descriptionDisplay = document.getElementById('w-desc')
 const temperatureDisplay = document.getElementById('w-temp')
 const iconDisplay = document.getElementById('w-icon')
 
-let zips = [33124, 33125, 33126, 33127, 33128, 33129, 33130, 33131, 33132, 33133]
-
-let randZip = zips[Math.floor(Math.random() * zips.length)];
-
-document.addEventListener('DOMContentLoaded', getWeatherData({zip: randZip}))
+document.addEventListener('DOMContentLoaded', getWeatherData(storage.getLocation()))
 
 locationForm.addEventListener('submit', (e) => {
   e.preventDefault()
   $(locationModal).modal('hide')
   let cityVal = cityInput.value
   let zipVal = zipInput.value
-  getWeatherData({city: cityVal, zip: zipVal})
+  let locationObj = {city: cityVal, zip: zipVal}
+  storage.setLocation(locationObj)
+  getWeatherData(locationObj)
 })
 
 
 function getWeatherData(obj) {
-  weather.getWeatherData({city: obj.city, zip: obj.zip})
-    // .then(data => {
-    //   console.log(data.weatherData)
-    // })
+  console.log({obj})
+  weather.getWeatherData(obj)
     .then(data => ui.paint(data.weatherData))
     .catch(err => {console.log(err)})
 };
